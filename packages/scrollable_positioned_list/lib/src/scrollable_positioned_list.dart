@@ -230,6 +230,7 @@ class ItemScrollController {
   Future<void> scrollTo({
     required int index,
     double alignment = 0,
+    double offset = 0.0,
     required Duration duration,
     Curve curve = Curves.linear,
     List<double> opacityAnimationWeights = const [40, 20, 40],
@@ -240,6 +241,7 @@ class ItemScrollController {
     return _scrollableListState!._scrollTo(
       index: index,
       alignment: alignment,
+      offset: offset,
       duration: duration,
       curve: curve,
       opacityAnimationWeights: opacityAnimationWeights,
@@ -430,6 +432,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
     required Duration duration,
     Curve curve = Curves.linear,
     required List<double> opacityAnimationWeights,
+    double offset = 0.0,
   }) async {
     if (index > widget.itemCount - 1) {
       index = widget.itemCount - 1;
@@ -441,6 +444,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
           index: index,
           alignment: alignment,
           duration: duration,
+          offset: offset,
           curve: curve,
           opacityAnimationWeights: opacityAnimationWeights,
         );
@@ -451,6 +455,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
         alignment: alignment,
         duration: duration,
         curve: curve,
+        offset: offset,
         opacityAnimationWeights: opacityAnimationWeights,
       );
     }
@@ -460,6 +465,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
     required int index,
     required double alignment,
     required Duration duration,
+    double offset = 0.0,
     Curve curve = Curves.linear,
     required List<double> opacityAnimationWeights,
   }) async {
@@ -474,7 +480,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
       await primary.scrollController.animateTo(
           primary.scrollController.offset +
               localScrollAmount -
-              alignment * primary.scrollController.position.viewportDimension,
+              alignment * primary.scrollController.position.viewportDimension + offset,
           duration: duration,
           curve: curve);
     } else {
